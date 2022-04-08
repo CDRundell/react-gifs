@@ -11,7 +11,7 @@ class App extends Component {
 
     this.state = {
       gifs: [],
-      selectedGifId: "ue0RpimpEN2k3gGJcO"
+      selectedGifId: "xT9IgDEI1iZyb2wqo8"
     };
 
     this.search("disney");
@@ -21,32 +21,35 @@ class App extends Component {
     giphy("h5bMAcEFXWItwLdyz524SCmp4f27ipTM").search({
       q: query,
       rating: 'g',
-      limit: 10 }, (error, result) => {
+      limit: 10
+    }, (error, result) => {
       this.setState({
         gifs: result.data
       });
     });
   }
 
-  render() {
-    // const gifs = [
-    //   { id: "ue0RpimpEN2k3gGJcO" },
-    //   { id: "ue0RpimpEN2k3gGJcO" }
-    // ];
+  selectGif = (id) => {
+    this.setState({
+      selectedGifId: id
+    });
+  }
 
+  render() {
     return (
-    <div>
-      <div className="left-scene">
-        <SearchBar searchFunction={this.search} />
-        <div className="selected-gif">
+      <div>
+        <div className="left-scene">
+          <SearchBar searchFunction={this.search} />
+          <div className="selected-gif">
             <Gif id={this.state.selectedGifId} />
+          </div>
+        </div>
+        <div className="right-scene">
+          <GifList gifs={this.state.gifs} selectGif={this.selectGif} />
         </div>
       </div>
-      <div className="right-scene">
-        <GifList gifs={this.state.gifs} />
-      </div>
-    </div>
-    )}
+    );
+  }
 }
 
 export default App;
